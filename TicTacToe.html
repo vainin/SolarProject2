@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic Tac Toe</title>
+<style>
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 400px;
+  }
+  .cell {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+<div class="container" id="board">
+</div>
+<p id="message"></p>
+<script>
+  const board = document.getElementById('board');
+  const message = document.getElementById('message');
+  let currentPlayer = 'X';
+  let gameOver = false;
+  const cells = [];
+
+  function checkWinner() {
+    const winningCombinations = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]
+    ];
+    for (const combination of winningCombinations) {
+      const [a, b, c] = combination;
+      if (cells[a].innerText && cells[a].innerText === cells[b].innerText && cells[a].innerText === cells[c].innerText) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function checkDraw() {
+    return cells.every(cell => cell.innerText !== '');
+  }
+
+  function handleClick(index) {
+    if (!gameOver && !cells[index].innerText) {
+      cells[index].innerText = currentPlayer;
+      if (checkWinner()) {
+        message.textContent = `${currentPlayer} wins!`;
+        gameOver = true;
+      } else if (checkDraw()) {
+        message.textContent = "It's a draw!";
+        gameOver = true;
+      } else {
+        currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+        message.textContent = `Player ${currentPlayer}'s turn`;
+      }
+    }
+  }
+
+  function init() {
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.addEventListener('click', () => handleClick(i));
+      cells.push(cell);
+      board.appendChild(cell);
+    }
+    message.textContent = `Player ${currentPlayer}'s turn`;
+  }
+
+  init();
+</script>
+</body>
+</html>

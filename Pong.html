@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pong</title>
+<style>
+    canvas {
+        background-color: black;
+        display: block;
+        margin: auto;
+    }
+</style>
+</head>
+<body>
+<canvas id="gameCanvas" width="800" height="600"></canvas>
+<script>
+    // Constants
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const WIDTH = canvas.width;
+    const HEIGHT = canvas.height;
+    const PADDLE_WIDTH = 10;
+    const PADDLE_HEIGHT = 100;
+    const BALL_SIZE = 20;
+    const PADDLE_SPEED = 5;
+    const BALL_SPEED = 5;
+
+    // Variables
+    let leftPaddleY = HEIGHT / 2 - PADDLE_HEIGHT / 2;
+    let rightPaddleY = HEIGHT / 2 - PADDLE_HEIGHT / 2;
+    let ballX = WIDTH / 2 - BALL_SIZE / 2;
+    let ballY = HEIGHT / 2 - BALL_SIZE / 2;
+    let ballSpeedX = BALL_SPEED;
+    let ballSpeedY = BALL_SPEED;
+
+    // Update function
+    function update() {
+        // Move ball
+        ballX += ballSpeedX;
+        ballY += ballSpeedY;
+
+        // Ball collision with top and bottom walls
+        if (ballY <= 0 || ballY + BALL_SIZE >= HEIGHT) {
+            ballSpeedY = -ballSpeedY;
+        }
+
+        // Ball collision with paddles
+        if ((ballX <= PADDLE_WIDTH && ballY + BALL_SIZE >= leftPaddleY && ballY <= leftPaddleY + PADDLE_HEIGHT) ||
+            (ballX + BALL_SIZE >= WIDTH - PADDLE_WIDTH && ballY + BALL_SIZE >= rightPaddleY && ballY <= rightPaddleY + PADDLE_HEIGHT)) {
+            ballSpeedX = -ballSpeedX;
+        }
+
+        // Ball out of bounds
+        if (ballX <= 0 || ballX + BALL_SIZE >= WIDTH) {
+            reset();
+        }
+    }
+
+    // Reset function
+    function reset() {
+        ballX = WIDTH / 2 - BALL_SIZE / 2;
+        ballY = HEIGHT / 2 - BALL_SIZE / 2;
+        ballSpeedX = BALL_SPEED;
+        ballSpeedY = BALL_SPEED;
+    }
+
+    // Draw function
+    function draw() {
+        // Clear canvas
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        // Draw paddles
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, leftPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT);
+        ctx.fillRect(WIDTH - PADDLE_WIDTH, rightPaddleY, PADDLE_WIDTH, PADDLE_HEIGHT);
+
+        // Draw ball
+        ctx.fillRect(ballX, ballY, BALL_SIZE, BALL_SIZE);
+    }
+
+    // Main game loop
+    function gameLoop() {
+        update();
+        draw();
+        requestAnimationFrame(gameLoop);
+    }
+
+    // Mouse event listener
+    canvas.addEventListener('mousemove', function(event) {
+        let mouseY = event.clientY - canvas.getBoundingClientRect().top - PADDLE_HEIGHT / 2;
+        if (mouseY >= 0 && mouseY <= HEIGHT - PADDLE_HEIGHT) {
+            leftPaddleY = mouseY;
+			rightPaddleY = mouseY;
+        }
+    });
+
+    // Start the game loop
+    gameLoop();
+</script>
+</body>
+</html>
