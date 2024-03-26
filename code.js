@@ -1,12 +1,20 @@
 var myGamePiece;
 var myObstacles = [];
 var myScore;
+const scorebox = document.getElementById("HiScore");
 
 function startGame() {
     myGamePiece = new component(30, 30, "red", 10, 120);
     myGamePiece.gravity = 0.05;
     myScore = new component("30px", "Consolas", "black", 280, 40, "text");
     myGameArea.start();
+}
+
+function restartGame(){
+	myGameArea.clear();
+	myObstacles = [];
+	myScore.text="SCORE: "
+	startGame();
 }
 
 var myGameArea = {
@@ -80,6 +88,7 @@ function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
+			if(scorebox.value<myGameArea.frameNo){scorebox.value = myGameArea.frameNo;}
             return;
         } 
     }
