@@ -1,3 +1,3 @@
 # SolarProject2
-
-Web games can add Pong, Maze, Flappy bird, Snake, Space Defender, Matching, and Tic-Tac-Toe 
+Group Project that seeks to be a simple animal theme website.
+Web games can add Pong,  Flappy bird, Snake, Space Defender, and Tic-Tac-Toe 
