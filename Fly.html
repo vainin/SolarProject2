@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8">
-	<title>Web Game</title>
+	<title>Swim</title>
 	<meta name="description"
            content="Flappy Bird">
     <meta name="keywords"
@@ -14,6 +14,7 @@
     <script type="text/javascript" src="code.js"></script> 
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 	<style>
     canvas {
         background-color: white;
@@ -23,20 +24,41 @@
 	body {
 		background-color: #4fb050;
 	}
+	.center {
+	  margin: 0;
+	  position: absolute;
+	  left: 50%;
+	  -ms-transform: translate(-50%, -50%);
+	  transform: translate(-50%, -50%); 
+	  }
+	
+	p {
+	margin: auto;
+	align-items: center;
+    justify-content: center;
+	text-align: center;
+	font-size: 24px;
+	}
 	</style>
 
 	</head>
 
 <body onload="startGame()"> 
-<br>
-<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">Flap</button>
-<p>Use the Flap button to stay in the air</p>
-<p>How long can you stay alive?</p>
+</br>
+<div class ="center">
+<button onmousedown="accelerate(-0.2)" onmouseup="accelerate(0.05)">Swim</button>
 <button onclick="restartGame()">Restart</button>
+</div>
 <form>
   <label for="HiScore">HiScore:</label><br>
   <input type="text" id="HiScore" name="HiScore" readonly value="99999"><br>
 </form>
+</br>
+<p>How you play this game is click the swim button to make the shape go up and stop clicking the button to make the shape go down. 
+</br> If you want to play again once it is game over then just click the restart button. 
+</br>When the game is over you can see your high score so you will know how you did and can see what score to beat.</p>
+</br>
+
         
 
 
@@ -46,7 +68,7 @@
         <br/>
 		<ul>
 			<a href="Index.html">Home</a>			
-			<a href="Fly.html">Fly</a> <!-- 2 green-->
+			<a href="Fly.html">Swim</a> <!-- 2 green-->
 			<a href="Pong.html">Pong</a> <!-- 3 blue -->
 			<a href="TicTacToe.html">Tic-Tac-Toe</a><!-- 4 green -->
 			<a href="Images.html">Image Gallery</a> <!-- 5 blue -->
